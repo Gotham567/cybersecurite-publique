@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cybersecurite-publique.fr/sitemap.xml
