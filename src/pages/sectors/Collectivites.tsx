@@ -1,7 +1,14 @@
 import { motion } from "framer-motion";
-import { Shield, AlertTriangle, CheckCircle, ArrowRight, Building2, Users, FileText, Lock, Phone, Clock } from "lucide-react";
+import { Shield, AlertTriangle, CheckCircle2, ArrowRight, Building2, Users, FileText, Lock, Phone, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEOHead from "../../components/SEOHead";
+
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5, delay, ease: [0.25, 0.1, 0.25, 1] },
+});
 
 const risks = [
   { icon: AlertTriangle, title: "Ransomware", desc: "Les collectivités sont la 1ère cible des rançongiciels en France. Une attaque paralyse en moyenne 3 semaines les services municipaux." },
@@ -23,7 +30,14 @@ const attacks = [
   { entity: "Ville de Caen", date: "2022", impact: "Réseau informatique paralysé, 700 postes bloqués, 3 semaines de rétablissement" },
   { entity: "Département Seine-Saint-Denis", date: "2023", impact: "Données de 400 000 habitants exposées, CNIL saisie, amende en cours" },
   { entity: "Mairie de Sartrouville", date: "2023", impact: "Rançon de 1,2M€ exigée, services en ligne coupés 6 semaines" },
-  { entity: "Communauté d'agglomération Grand Châtellerault", date: "2024", impact: "Ransomware LockBit, sauvegarde corrompue, reconstruction totale du SI" },
+  { entity: "CA Grand Châtellerault", date: "2024", impact: "Ransomware LockBit, sauvegarde corrompue, reconstruction totale du SI" },
+];
+
+const heroStats = [
+  { val: "3 800+", label: "collectivités attaquées en 2023" },
+  { val: "72h", label: "délai de déclaration NIS2" },
+  { val: "10M€", label: "amende max non-conformité" },
+  { val: "3 sem.", label: "durée moy. paralysie après ransomware" },
 ];
 
 const jsonLd = {
@@ -46,17 +60,22 @@ export default function Collectivites() {
       />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/5" />
-        <div className="container mx-auto px-6 relative">
+      <section className="pt-36 pb-24 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse 80% 60% at 30% 20%, hsl(213 94% 58% / 0.1) 0%, transparent 60%)" }} />
+        <div className="container mx-auto px-6 relative z-10">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-4xl">
-            <div className="section-tag mb-6">
-              <Building2 className="w-3.5 h-3.5" /> Collectivités territoriales
+            <div className="flex items-center gap-3 mb-6">
+              <div className="dot-live" />
+              <div className="section-tag">
+                <Building2 className="w-3 h-3" /> Collectivités territoriales
+              </div>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              Cybersécurité pour les <span className="text-gradient">collectivités locales</span>
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-6 leading-tight tracking-tight">
+              Cybersécurité pour les{" "}
+              <span className="text-gradient">collectivités locales</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed max-w-3xl">
+            <p className="text-xl text-muted-foreground mb-9 leading-relaxed max-w-3xl">
               Mairies, intercommunalités, départements, régions : votre SI municipal est une cible prioritaire des cybercriminels.
               Nos experts qualifiés PASSI vous accompagnent de l'audit jusqu'à la conformité NIS2 complète.
             </p>
@@ -72,16 +91,17 @@ export default function Collectivites() {
 
           {/* Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-14">
-            {[
-              { val: "3 800+", label: "collectivités attaquées en 2023" },
-              { val: "72h", label: "délai de déclaration NIS2" },
-              { val: "10M€", label: "amende max non-conformité" },
-              { val: "3 sem.", label: "durée moy. paralysie après ransomware" },
-            ].map((s, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }}
-                className="glass rounded-xl p-5 text-center">
-                <div className="text-2xl font-bold text-primary font-heading">{s.val}</div>
-                <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
+            {heroStats.map((s, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.1 }}
+                className="rounded-2xl p-6 text-center"
+                style={{
+                  background: "hsl(224 42% 7% / 0.85)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(16px)",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)"
+                }}>
+                <div className="stat-number text-2xl mb-2">{s.val}</div>
+                <div className="text-xs text-muted-foreground leading-snug">{s.label}</div>
               </motion.div>
             ))}
           </div>
@@ -89,29 +109,33 @@ export default function Collectivites() {
       </section>
 
       {/* Risks */}
-      <section className="py-20 bg-card/20">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-14">
-            <div className="section-tag mx-auto mb-4"><AlertTriangle className="w-3.5 h-3.5" /> Menaces</div>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+      <section className="py-20 px-6">
+        <div className="divider-glow mb-20" />
+        <div className="container mx-auto max-w-6xl">
+          <motion.div {...fade()} className="text-center mb-14">
+            <div className="section-tag mx-auto mb-4"
+              style={{ borderColor: "rgba(239,68,68,0.28)", background: "rgba(239,68,68,0.07)", color: "rgb(252,165,165)" }}>
+              <AlertTriangle className="w-3 h-3" /> Menaces
+            </div>
+            <h2 className="font-heading text-3xl md:text-4xl font-black text-foreground mb-4 tracking-tight">
               Les cybermenaces qui ciblent les collectivités
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Le secteur public est la 1ère cible des cyberattaques en France depuis 2021.
-              Comprendre les menaces est le premier pas pour s'en protéger.
             </p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
+          </motion.div>
+          <div className="grid md:grid-cols-2 gap-5">
             {risks.map((r, i) => (
-              <motion.div key={i} initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }} whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="glass rounded-xl p-6 flex gap-5">
-                <div className="w-12 h-12 rounded-lg bg-destructive/10 border border-destructive/20 flex items-center justify-center shrink-0">
-                  <r.icon className="w-6 h-6 text-destructive" />
-                </div>
-                <div>
-                  <h3 className="font-heading font-bold text-foreground mb-2">{r.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
+              <motion.div key={i} {...fade(i * 0.1)}>
+                <div className="glass glass-hover rounded-2xl p-7 flex gap-5 h-full">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 mt-0.5"
+                    style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.22)" }}>
+                    <r.icon className="w-5.5 h-5.5 text-red-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-heading font-bold text-foreground mb-2">{r.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -120,58 +144,65 @@ export default function Collectivites() {
       </section>
 
       {/* Recent attacks */}
-      <section className="py-20">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-14">
-            <div className="section-tag mx-auto mb-4"><Clock className="w-3.5 h-3.5" /> Incidents récents</div>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+      <section className="py-20 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <motion.div {...fade()} className="text-center mb-14">
+            <div className="section-tag mx-auto mb-4"><Clock className="w-3 h-3" /> Incidents récents</div>
+            <h2 className="font-heading text-3xl md:text-4xl font-black text-foreground mb-4 tracking-tight">
               Collectivités françaises touchées
             </h2>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full glass rounded-xl overflow-hidden">
+          </motion.div>
+          <motion.div {...fade(0.1)} className="rounded-2xl overflow-hidden"
+            style={{ border: "1px solid rgba(239,68,68,0.14)", background: "hsl(224 42% 7% / 0.85)", backdropFilter: "blur(16px)" }}>
+            <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/40 bg-primary/5">
-                  <th className="text-left px-6 py-4 text-sm font-semibold text-foreground">Entité</th>
-                  <th className="text-left px-6 py-4 text-sm font-semibold text-foreground">Année</th>
-                  <th className="text-left px-6 py-4 text-sm font-semibold text-foreground">Impact</th>
+                <tr style={{ background: "rgba(239,68,68,0.06)", borderBottom: "1px solid rgba(239,68,68,0.1)" }}>
+                  {["Entité", "Année", "Impact"].map(h => (
+                    <th key={h} className="text-left px-6 py-4 font-heading font-semibold text-xs uppercase tracking-wider"
+                      style={{ color: "rgba(252,165,165,0.65)" }}>{h}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
                 {attacks.map((a, i) => (
-                  <tr key={i} className={`border-b border-border/20 ${i % 2 === 0 ? "bg-muted/5" : ""}`}>
-                    <td className="px-6 py-4 font-medium text-foreground text-sm">{a.entity}</td>
-                    <td className="px-6 py-4 text-sm text-muted-foreground">{a.date}</td>
+                  <tr key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.035)" }}>
+                    <td className="px-6 py-4 font-semibold text-foreground">{a.entity}</td>
+                    <td className="px-6 py-4 font-mono text-muted-foreground text-xs">{a.date}</td>
                     <td className="px-6 py-4 text-sm text-muted-foreground">{a.impact}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Services */}
-      <section className="py-20 bg-card/20">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-14">
-            <div className="section-tag mx-auto mb-4"><Shield className="w-3.5 h-3.5" /> Nos services</div>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+      <section className="py-20 px-6">
+        <div className="divider-glow mb-20" />
+        <div className="container mx-auto max-w-6xl">
+          <motion.div {...fade()} className="text-center mb-14">
+            <div className="section-tag mx-auto mb-4"><Shield className="w-3 h-3" /> Nos services</div>
+            <h2 className="font-heading text-3xl md:text-4xl font-black text-foreground mb-4 tracking-tight">
               Solutions cybersécurité dédiées aux collectivités
             </h2>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          </motion.div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {services.map((s, i) => (
-              <motion.div key={i} whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 20 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
-                <Link to={s.href} className="glass rounded-xl p-6 h-full flex flex-col group hover:border-primary/40 transition-all block">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-all">
-                    <CheckCircle className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-heading font-bold text-foreground mb-2 group-hover:text-primary transition-colors">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">{s.desc}</p>
-                  <div className="flex items-center gap-1 text-primary text-sm font-medium mt-4">
-                    En savoir plus <ArrowRight className="w-4 h-4" />
+              <motion.div key={i} {...fade(i * 0.08)}>
+                <Link to={s.href} className="group block h-full">
+                  <div className="card-premium h-full p-6">
+                    <div className="relative z-10">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110"
+                        style={{ background: "hsl(213 94% 58% / 0.12)", border: "1px solid hsl(213 94% 58% / 0.25)" }}>
+                        <CheckCircle2 className="w-5 h-5" style={{ color: "hsl(213 94% 68%)" }} />
+                      </div>
+                      <h3 className="font-heading font-bold text-foreground mb-2 group-hover:text-primary transition-colors">{s.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-4">{s.desc}</p>
+                      <div className="flex items-center gap-1.5 text-xs font-medium" style={{ color: "hsl(213 94% 65%)" }}>
+                        En savoir plus <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                      </div>
+                    </div>
                   </div>
                 </Link>
               </motion.div>
@@ -181,28 +212,40 @@ export default function Collectivites() {
       </section>
 
       {/* CTA */}
-      <section className="py-20">
-        <div className="container mx-auto px-6">
-          <div className="glass rounded-2xl p-10 md:p-14 text-center border-primary/20 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5" />
-            <div className="relative">
-              <div className="section-tag mx-auto mb-6"><Phone className="w-3.5 h-3.5" /> Contact</div>
-              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Votre collectivité est-elle conforme NIS2 ?
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-                Obtenez en 48h un diagnostic gratuit de votre niveau de maturité cybersécurité et un plan d'action prioritaire.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link to="/contact" className="btn-primary text-base">
-                  Diagnostic gratuit <ArrowRight className="w-4 h-4" />
-                </Link>
-                <a href="tel:+33100000000" className="btn-secondary text-base">
-                  <Phone className="w-4 h-4" /> 01 00 00 00 00
-                </a>
+      <section className="py-20 px-6 pb-28">
+        <div className="container mx-auto max-w-4xl">
+          <motion.div {...fade()}>
+            <div className="relative rounded-3xl p-10 md:p-14 text-center overflow-hidden"
+              style={{
+                background: "linear-gradient(135deg, hsl(214 100% 10%), hsl(224 50% 7%), hsl(213 80% 10%))",
+                border: "1px solid hsl(213 94% 58% / 0.22)",
+                boxShadow: "0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07)"
+              }}>
+              <div className="absolute top-0 left-0 right-0 h-px"
+                style={{ background: "linear-gradient(90deg, transparent, hsl(213 94% 65% / 0.5), transparent)" }} />
+              <div className="relative z-10">
+                <div className="section-tag mx-auto mb-6"
+                  style={{ borderColor: "hsl(213 94% 58% / 0.3)", background: "hsl(213 94% 58% / 0.1)", color: "hsl(213 94% 78%)" }}>
+                  <Phone className="w-3 h-3" /> Contact
+                </div>
+                <h2 className="font-heading text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
+                  Votre collectivité est-elle conforme NIS2 ?
+                </h2>
+                <p className="max-w-2xl mx-auto mb-8 leading-relaxed" style={{ color: "hsl(213 50% 72%)" }}>
+                  Obtenez en 48h un diagnostic gratuit de votre niveau de maturité cybersécurité et un plan d'action prioritaire.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <Link to="/contact" className="btn-primary text-base">
+                    Diagnostic gratuit <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <a href="tel:+33100000000" className="btn-secondary text-base"
+                    style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.1)" }}>
+                    <Phone className="w-4 h-4" /> 01 00 00 00 00
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </>

@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import {
   Shield, Hospital, Building2, Factory, ArrowRight, CheckCircle2,
   AlertTriangle, Lock, Users, Clock, Award, FileCheck,
-  Zap, BookOpen, Phone, Star, ChevronRight, Target, Eye
+  Zap, BookOpen, Phone, Star, ChevronRight, Target, Eye,
+  TrendingUp, Search, Settings, BarChart3, HeartHandshake, BadgeCheck
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 
@@ -15,10 +16,19 @@ const fade = (delay = 0) => ({
 });
 
 const stats = [
-  { value: "3 800+", label: "Collectivités attaquées en 2024", icon: AlertTriangle, color: "from-red-500/20 to-red-600/10", iconColor: "text-red-400", border: "border-red-500/20" },
-  { value: "380M€", label: "Coût moyen d'une attaque hôpital", icon: Hospital, color: "from-orange-500/20 to-orange-600/10", iconColor: "text-orange-400", border: "border-orange-500/20" },
-  { value: "72h", label: "Délai max de notification NIS2", icon: Clock, color: "from-yellow-500/20 to-yellow-600/10", iconColor: "text-yellow-400", border: "border-yellow-500/20" },
-  { value: "100%", label: "Des organismes publics concernés", icon: Shield, color: "from-primary/20 to-primary/10", iconColor: "text-primary", border: "border-primary/20" },
+  { value: "3 800+", label: "Collectivités attaquées en 2024", icon: AlertTriangle, color: "rgba(239,68,68,0.12)", iconColor: "#f87171", border: "rgba(239,68,68,0.2)" },
+  { value: "380M€", label: "Coût moyen d'une attaque hôpital", icon: Hospital, color: "rgba(249,115,22,0.1)", iconColor: "#fb923c", border: "rgba(249,115,22,0.2)" },
+  { value: "72h", label: "Délai max de notification NIS2", icon: Clock, color: "rgba(234,179,8,0.1)", iconColor: "#facc15", border: "rgba(234,179,8,0.2)" },
+  { value: "100%", label: "Des organismes publics concernés", icon: Shield, color: "hsl(213 94% 58% / 0.12)", iconColor: "hsl(213 94% 70%)", border: "hsl(213 94% 58% / 0.22)" },
+];
+
+const trustMetrics = [
+  { value: "200+", label: "Missions réalisées", icon: BadgeCheck },
+  { value: "50+", label: "Clients secteur public", icon: Users },
+  { value: "4h", label: "Délai d'intervention CERT", icon: Zap },
+  { value: "15 ans", label: "D'expérience sectorielle", icon: Award },
+  { value: "PASSI", label: "Qualifié ANSSI", icon: Shield },
+  { value: "NIS2", label: "Expert certifié", icon: FileCheck },
 ];
 
 const sectors = [
@@ -28,10 +38,9 @@ const sectors = [
     desc: "Mairies, régions, départements, intercommunalités. Mise en conformité NIS2, audit ANSSI, plan de continuité d'activité.",
     href: "/cybersecurite-collectivites",
     tags: ["NIS2", "ANSSI", "RGPD"],
-    accent: "blue",
-    gradient: "from-blue-500/10 via-blue-600/5 to-transparent",
-    iconBg: "bg-blue-500/15 border-blue-500/25",
-    iconColor: "text-blue-400",
+    iconBg: "hsl(213 94% 58% / 0.12)",
+    iconBorder: "hsl(213 94% 58% / 0.25)",
+    iconColor: "hsl(213 94% 70%)",
   },
   {
     icon: Hospital,
@@ -39,10 +48,9 @@ const sectors = [
     desc: "Hôpitaux, cliniques, EHPAD, GHT, GIP e-santé. Certification HDS, conformité RGPD données de santé, protection SIH.",
     href: "/cybersecurite-sante",
     tags: ["HDS", "NIS2", "RGPD Santé"],
-    accent: "green",
-    gradient: "from-emerald-500/10 via-emerald-600/5 to-transparent",
-    iconBg: "bg-emerald-500/15 border-emerald-500/25",
-    iconColor: "text-emerald-400",
+    iconBg: "hsl(158 64% 44% / 0.12)",
+    iconBorder: "hsl(158 64% 44% / 0.28)",
+    iconColor: "hsl(158 64% 62%)",
   },
   {
     icon: Factory,
@@ -50,10 +58,63 @@ const sectors = [
     desc: "Opérateurs d'importance vitale (OIV), opérateurs de services essentiels. Sécurité OT/ICS, IEC 62443, LPM.",
     href: "/cybersecurite-industrie",
     tags: ["OIV", "OT/ICS", "LPM"],
-    accent: "blue",
-    gradient: "from-violet-500/10 via-violet-600/5 to-transparent",
-    iconBg: "bg-violet-500/15 border-violet-500/25",
-    iconColor: "text-violet-400",
+    iconBg: "hsl(270 70% 60% / 0.12)",
+    iconBorder: "hsl(270 70% 60% / 0.25)",
+    iconColor: "hsl(270 70% 72%)",
+  },
+];
+
+const processSteps = [
+  {
+    num: "01",
+    icon: Search,
+    title: "Diagnostic",
+    desc: "Audit de maturité cyber complet — infrastructure, processus, humain. Rapport CVSS avec priorisation des vulnérabilités.",
+    duration: "Sous 10 jours",
+  },
+  {
+    num: "02",
+    icon: Settings,
+    title: "Plan d'action",
+    desc: "Feuille de route budgétée et priorisée. Compatible marchés publics, FONDS cyber ANSSI et dispositifs régionaux.",
+    duration: "Semaine 2",
+  },
+  {
+    num: "03",
+    icon: Shield,
+    title: "Implémentation",
+    desc: "Déploiement des mesures techniques et organisationnelles. Formation des équipes, mise en conformité NIS2/HDS.",
+    duration: "M2 → M6",
+  },
+  {
+    num: "04",
+    icon: BarChart3,
+    title: "Monitoring",
+    desc: "Supervision continue, tests d'intrusion annuels, CERT 24/7. Tableaux de bord et rapports dirigeants trimestriels.",
+    duration: "En continu",
+  },
+];
+
+const whyUs = [
+  {
+    icon: HeartHandshake,
+    title: "100% secteur public",
+    desc: "Nous travaillons exclusivement pour des collectivités, hôpitaux et organismes publics. Nous connaissons vos contraintes : budget contraint, marchés publics, agents non-techniques.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Qualifié PASSI ANSSI",
+    desc: "Seuls les prestataires qualifiés PASSI peuvent réaliser des audits certifiés ANSSI. Notre qualification vous garantit une expertise reconnue au plus haut niveau.",
+  },
+  {
+    icon: Zap,
+    title: "CERT 24/7 en 4h",
+    desc: "En cas d'incident, notre équipe CERT intervient en moins de 4h, 7j/7. Confinement immédiat, investigation forensique, reprise d'activité guidée.",
+  },
+  {
+    icon: TrendingUp,
+    title: "ROI mesurable",
+    desc: "Nos clients réduisent leur surface d'attaque de 73% en moyenne dès le premier audit. Nous fournissons des KPIs chiffrés et des tableaux de bord dirigeants.",
   },
 ];
 
@@ -95,13 +156,7 @@ const testimonials = [
   },
 ];
 
-const certifs = [
-  { label: "PASSI ANSSI", icon: "🛡️" },
-  { label: "ISO 27001", icon: "✓" },
-  { label: "HDS Certified", icon: "⚕️" },
-  { label: "Expert NIS2", icon: "📋" },
-  { label: "QUALIOPI", icon: "🎓" },
-];
+const certifs = ["PASSI ANSSI", "ISO 27001", "HDS", "Expert NIS2", "QUALIOPI"];
 
 const articles = [
   {
@@ -147,20 +202,23 @@ export default function Index() {
 
       {/* ── HERO ── */}
       <section className="relative pt-36 pb-28 px-6 overflow-hidden">
-        {/* Background orbs */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-primary/8 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute top-40 right-0 w-[400px] h-[400px] bg-secondary/6 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute top-60 left-0 w-[300px] h-[300px] bg-violet-500/5 rounded-full blur-[80px] pointer-events-none" />
-
-        {/* Floating shield */}
-        <div className="absolute top-28 right-16 hidden xl:block animate-float opacity-20">
-          <div className="w-24 h-24 rounded-2xl border border-primary/30 bg-primary/10 flex items-center justify-center">
-            <Shield className="w-12 h-12 text-primary" />
+        {/* Floating decorative elements */}
+        <div className="absolute top-28 right-16 hidden xl:block animate-float opacity-25">
+          <div className="w-20 h-20 rounded-2xl flex items-center justify-center"
+            style={{ background: "hsl(213 94% 58% / 0.1)", border: "1px solid hsl(213 94% 58% / 0.25)", backdropFilter: "blur(8px)" }}>
+            <Shield className="w-10 h-10" style={{ color: "hsl(213 94% 65%)" }} />
           </div>
         </div>
-        <div className="absolute bottom-20 left-10 hidden xl:block animate-float-delayed opacity-15">
-          <div className="w-16 h-16 rounded-xl border border-secondary/30 bg-secondary/10 flex items-center justify-center">
-            <Lock className="w-8 h-8 text-secondary" />
+        <div className="absolute bottom-24 left-12 hidden xl:block animate-float-2 opacity-20">
+          <div className="w-14 h-14 rounded-xl flex items-center justify-center"
+            style={{ background: "hsl(158 64% 44% / 0.1)", border: "1px solid hsl(158 64% 44% / 0.25)", backdropFilter: "blur(8px)" }}>
+            <Lock className="w-7 h-7" style={{ color: "hsl(158 64% 62%)" }} />
+          </div>
+        </div>
+        <div className="absolute top-60 right-1/4 hidden 2xl:block animate-float opacity-15">
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center"
+            style={{ background: "hsl(270 70% 60% / 0.1)", border: "1px solid hsl(270 70% 60% / 0.2)" }}>
+            <AlertTriangle className="w-5 h-5" style={{ color: "hsl(270 70% 72%)" }} />
           </div>
         </div>
 
@@ -169,14 +227,17 @@ export default function Index() {
             {/* Left */}
             <div>
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                <div className="section-tag mb-7">
-                  <Shield className="w-3 h-3" /> Spécialiste Secteur Public &amp; Santé
+                <div className="flex items-center gap-3 mb-7">
+                  <div className="dot-live" />
+                  <span className="section-tag">
+                    <Shield className="w-3 h-3" /> Spécialiste Secteur Public &amp; Santé
+                  </span>
                 </div>
               </motion.div>
 
               <motion.h1
                 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-                className="font-heading text-5xl md:text-6xl xl:text-7xl font-black leading-[1.05] mb-7 tracking-tight"
+                className="font-heading text-5xl md:text-6xl xl:text-[4.25rem] font-black leading-[1.05] mb-7 tracking-tight"
               >
                 Cyber&shy;sécurité pour{" "}
                 <span className="text-gradient">collectivités</span>
@@ -188,7 +249,7 @@ export default function Index() {
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-lg text-muted-foreground leading-relaxed mb-9 max-w-xl"
               >
-                Les organismes publics sont la cible n°1 des cyberattaques. Audit PASSI, conformité NIS2 &amp; HDS, pentest, CERT 24/7 — nous sécurisons vos systèmes et intervenons en 4h en cas d'incident.
+                Les organismes publics sont la cible n°1 des cyberattaques. Audit PASSI qualifié ANSSI, conformité NIS2 &amp; HDS, pentest, CERT 24/7 — nous sécurisons vos systèmes et intervenons en 4h en cas d'incident.
               </motion.p>
 
               <motion.div
@@ -208,30 +269,38 @@ export default function Index() {
                 className="flex flex-wrap gap-2"
               >
                 {certifs.map((c) => (
-                  <span key={c.label}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "hsl(215 20% 65%)" }}
+                  <span key={c}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium font-mono"
+                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "hsl(215 20% 62%)" }}
                   >
-                    <CheckCircle2 className="w-3 h-3 text-secondary" /> {c.label}
+                    <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(158 64% 55%)" }} /> {c}
                   </span>
                 ))}
               </motion.div>
             </div>
 
-            {/* Right — Stats */}
+            {/* Right — Stats grid */}
             <div className="grid grid-cols-2 gap-4">
               {stats.map((s, i) => (
                 <motion.div
                   key={s.label}
                   initial={{ opacity: 0, scale: 0.92, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
-                  className={`relative rounded-2xl p-6 overflow-hidden border ${s.border}`}
-                  style={{ background: `linear-gradient(135deg, hsl(222 40% 10% / 0.9), hsl(222 40% 8% / 0.9))`, backdropFilter: "blur(12px)" }}
+                  transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
+                  className="relative rounded-2xl p-6 overflow-hidden"
+                  style={{
+                    background: "linear-gradient(135deg, hsl(224 42% 8% / 0.95), hsl(224 42% 6% / 0.95))",
+                    border: `1px solid ${s.border}`,
+                    backdropFilter: "blur(16px)",
+                    boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)"
+                  }}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-60`} />
+                  <div className="absolute inset-0 rounded-2xl" style={{ background: s.color, opacity: 0.5 }} />
                   <div className="relative z-10">
-                    <s.icon className={`w-6 h-6 ${s.iconColor} mb-4`} />
-                    <div className="num-big mb-2">{s.value}</div>
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4"
+                      style={{ background: `${s.color}`, border: `1px solid ${s.border}` }}>
+                      <s.icon className="w-4.5 h-4.5" style={{ color: s.iconColor }} />
+                    </div>
+                    <div className="stat-number text-3xl mb-2">{s.value}</div>
                     <div className="text-xs text-muted-foreground leading-snug">{s.label}</div>
                   </div>
                 </motion.div>
@@ -243,16 +312,19 @@ export default function Index() {
 
       {/* ── ALERTE NIS2 ── */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(239,68,68,0.08), rgba(234,88,12,0.05))", borderTop: "1px solid rgba(239,68,68,0.2)", borderBottom: "1px solid rgba(239,68,68,0.2)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(239,68,68,0.07), rgba(234,88,12,0.04))", borderTop: "1px solid rgba(239,68,68,0.18)", borderBottom: "1px solid rgba(239,68,68,0.18)" }} />
         <div className="relative container mx-auto px-6 py-4">
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
-            <div className="flex items-center gap-2 text-red-400">
-              <div className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
-              <AlertTriangle className="w-4 h-4" />
-              <strong className="text-red-300">ALERTE NIS2</strong>
+            <div className="flex items-center gap-2">
+              <div className="dot-red" />
+              <AlertTriangle className="w-4 h-4 text-red-400" />
+              <strong className="text-red-300 font-heading">ALERTE NIS2</strong>
             </div>
-            <span className="text-red-300/80">Les collectivités et hôpitaux doivent être conformes avant le</span>
-            <span className="font-bold text-red-300 bg-red-500/15 px-2 py-0.5 rounded border border-red-500/25">17 octobre 2026</span>
+            <span className="text-red-300/75">Les collectivités et hôpitaux doivent être conformes avant le</span>
+            <span className="font-bold text-red-300 font-mono px-2 py-0.5 rounded border"
+              style={{ background: "rgba(239,68,68,0.12)", borderColor: "rgba(239,68,68,0.25)" }}>
+              17 octobre 2026
+            </span>
             <Link to="/services/nis2" className="text-red-300 underline underline-offset-2 hover:text-red-200 transition-colors font-medium">
               Vérifier votre conformité →
             </Link>
@@ -260,8 +332,34 @@ export default function Index() {
         </div>
       </div>
 
+      {/* ── TRUST BAR ── */}
+      <section className="py-16 px-6 relative overflow-hidden">
+        <div className="divider-glow mb-0" />
+        <div className="container mx-auto max-w-7xl">
+          <motion.div {...fade()} className="text-center mb-10">
+            <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground/60">Nos chiffres clés</p>
+          </motion.div>
+          <motion.div {...fade(0.1)} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {trustMetrics.map((m, i) => (
+              <motion.div key={m.label} {...fade(i * 0.06)}
+                className="text-center rounded-2xl py-6 px-4"
+                style={{
+                  background: "hsl(224 42% 7% / 0.7)",
+                  border: "1px solid rgba(255,255,255,0.05)",
+                  backdropFilter: "blur(12px)"
+                }}>
+                <m.icon className="w-5 h-5 mx-auto mb-3" style={{ color: "hsl(213 94% 65%)" }} />
+                <div className="stat-number text-2xl mb-1">{m.value}</div>
+                <div className="text-xs text-muted-foreground leading-tight">{m.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+        <div className="divider-glow mt-16" />
+      </section>
+
       {/* ── SECTEURS ── */}
-      <section className="py-28 px-6">
+      <section className="py-24 px-6">
         <div className="container mx-auto max-w-7xl">
           <motion.div {...fade()} className="text-center mb-16">
             <div className="section-tag mx-auto mb-5">Nos secteurs d'expertise</div>
@@ -277,23 +375,11 @@ export default function Index() {
             {sectors.map((s, i) => (
               <motion.div key={s.title} {...fade(i * 0.12)}>
                 <Link to={s.href} className="group block h-full">
-                  <div className="relative rounded-2xl p-8 h-full overflow-hidden transition-all duration-300 group-hover:-translate-y-2"
-                    style={{
-                      background: "linear-gradient(135deg, hsl(222 40% 9% / 0.95), hsl(222 40% 7% / 0.95))",
-                      border: "1px solid rgba(255,255,255,0.06)",
-                      backdropFilter: "blur(16px)",
-                      boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)"
-                    }}
-                  >
-                    {/* Gradient overlay on hover */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${s.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                    {/* Border glow on hover */}
-                    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ boxShadow: `inset 0 0 0 1px hsl(214 100% 60% / 0.2)` }} />
-
+                  <div className="card-premium h-full p-8">
                     <div className="relative z-10">
-                      <div className={`w-14 h-14 rounded-2xl ${s.iconBg} border flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110`}>
-                        <s.icon className={`w-7 h-7 ${s.iconColor}`} />
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
+                        style={{ background: s.iconBg, border: `1px solid ${s.iconBorder}` }}>
+                        <s.icon className="w-7 h-7" style={{ color: s.iconColor }} />
                       </div>
 
                       <div className="flex flex-wrap gap-1.5 mb-4">
@@ -322,20 +408,82 @@ export default function Index() {
         </div>
       </section>
 
+      {/* ── PROCESSUS ── */}
+      <section className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent, hsl(224 42% 6% / 0.5), transparent)" }} />
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <motion.div {...fade()} className="text-center mb-16">
+            <div className="section-tag mx-auto mb-5">
+              <Settings className="w-3 h-3" /> Notre méthode
+            </div>
+            <h2 className="font-heading text-4xl md:text-5xl font-black text-foreground mb-5 tracking-tight">
+              De l'audit à la <span className="text-gradient">protection totale</span>
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+              Une approche structurée en 4 phases, adaptée aux contraintes du secteur public, pour une sécurité durable et mesurable.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            {/* Connector line */}
+            <div className="absolute top-[3.5rem] left-[12.5%] right-[12.5%] h-px hidden lg:block"
+              style={{ background: "linear-gradient(90deg, transparent, hsl(213 94% 58% / 0.3), hsl(213 94% 58% / 0.3), transparent)" }} />
+
+            {processSteps.map((step, i) => (
+              <motion.div key={step.num} {...fade(i * 0.13)}>
+                <div className="relative rounded-2xl p-8 h-full"
+                  style={{
+                    background: "hsl(224 42% 7% / 0.85)",
+                    border: "1px solid rgba(255,255,255,0.06)",
+                    backdropFilter: "blur(16px)",
+                    boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)"
+                  }}>
+                  {/* Step number background */}
+                  <div className="step-num absolute top-4 right-5 select-none">{step.num}</div>
+
+                  <div className="relative z-10">
+                    {/* Icon circle */}
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6"
+                      style={{
+                        background: "hsl(213 94% 58% / 0.12)",
+                        border: "1px solid hsl(213 94% 58% / 0.25)",
+                        boxShadow: "0 0 20px hsl(213 94% 58% / 0.1)"
+                      }}>
+                      <step.icon className="w-5.5 h-5.5" style={{ color: "hsl(213 94% 70%)" }} />
+                    </div>
+
+                    <h3 className="font-heading font-bold text-foreground text-lg mb-3">{step.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-5">{step.desc}</p>
+                    <span className="inline-flex items-center text-xs font-mono px-2.5 py-1 rounded-full"
+                      style={{ background: "hsl(213 94% 58% / 0.08)", border: "1px solid hsl(213 94% 58% / 0.18)", color: "hsl(213 94% 65%)" }}>
+                      {step.duration}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div {...fade(0.35)} className="text-center mt-12">
+            <Link to="/contact" className="btn-primary px-8 py-3.5">
+              Démarrer mon diagnostic <ArrowRight className="w-4 h-4" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── ATTAQUES ── */}
-      <section className="py-28 px-6 relative overflow-hidden">
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent, hsl(222 47% 5% / 0.5), transparent)" }} />
-        <div className="absolute inset-0 bg-red-950/5" />
+      <section className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-red-950/[0.04]" />
         <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div {...fade()} className="text-center mb-14">
-            <div className="section-tag mx-auto mb-5" style={{ borderColor: "rgba(239,68,68,0.3)", background: "rgba(239,68,68,0.08)", color: "rgb(252,165,165)" }}>
+            <div className="section-tag mx-auto mb-5"
+              style={{ borderColor: "rgba(239,68,68,0.28)", background: "rgba(239,68,68,0.07)", color: "rgb(252,165,165)" }}>
               <AlertTriangle className="w-3 h-3" /> Pourquoi agir maintenant
             </div>
             <h2 className="font-heading text-4xl md:text-5xl font-black text-foreground mb-5 tracking-tight">
               Les organismes publics sont{" "}
-              <span style={{ background: "linear-gradient(135deg, #f87171, #ef4444)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                la cible n°1
-              </span>
+              <span className="text-red-gradient">la cible n°1</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
               Ransomwares, vols de données, espionnage — les attaques contre le secteur public ont explosé. Quelques exemples récents.
@@ -343,30 +491,27 @@ export default function Index() {
           </motion.div>
 
           <motion.div {...fade(0.15)} className="rounded-2xl overflow-hidden"
-            style={{ border: "1px solid rgba(239,68,68,0.15)", background: "hsl(222 40% 8% / 0.8)", backdropFilter: "blur(12px)" }}>
+            style={{ border: "1px solid rgba(239,68,68,0.14)", background: "hsl(224 42% 7% / 0.85)", backdropFilter: "blur(16px)" }}>
             <table className="w-full text-sm">
               <thead>
-                <tr style={{ background: "rgba(239,68,68,0.06)", borderBottom: "1px solid rgba(239,68,68,0.12)" }}>
+                <tr style={{ background: "rgba(239,68,68,0.06)", borderBottom: "1px solid rgba(239,68,68,0.1)" }}>
                   {["Organisme", "Type d'attaque", "Impact", "Année"].map(h => (
                     <th key={h} className="text-left px-6 py-4 font-heading font-semibold text-xs uppercase tracking-wider"
-                      style={{ color: "rgb(252,165,165,0.7)" }}>{h}</th>
+                      style={{ color: "rgba(252,165,165,0.65)" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {attacks.map((a, i) => (
                   <motion.tr key={i} {...fade(i * 0.07)}
-                    className="border-b border-white/5 hover:bg-white/3 transition-colors group"
-                    style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                    className="transition-colors group"
+                    style={{ borderBottom: "1px solid rgba(255,255,255,0.035)" }}>
                     <td className="px-6 py-5 font-semibold text-foreground">{a.org}</td>
                     <td className="px-6 py-5">
-                      <span className="px-2.5 py-1 rounded-full text-xs font-mono font-medium"
-                        style={{ background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.25)", color: "#fca5a5" }}>
-                        {a.type}
-                      </span>
+                      <span className="badge-red">{a.type}</span>
                     </td>
                     <td className="px-6 py-5 text-muted-foreground">{a.impact}</td>
-                    <td className="px-6 py-5 font-mono text-muted-foreground">{a.year}</td>
+                    <td className="px-6 py-5 font-mono text-muted-foreground text-xs">{a.year}</td>
                   </motion.tr>
                 ))}
               </tbody>
@@ -374,15 +519,55 @@ export default function Index() {
           </motion.div>
 
           <motion.div {...fade(0.3)} className="text-center mt-8">
-            <Link to="/actualites/cyberattaques-hopitaux-france-bilan" className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1.5">
+            <Link to="/actualites/cyberattaques-hopitaux-france-bilan"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1.5">
               Voir le bilan complet des cyberattaques <ChevronRight className="w-4 h-4" />
             </Link>
           </motion.div>
         </div>
       </section>
 
+      {/* ── POURQUOI NOUS ── */}
+      <section className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent, hsl(213 94% 58% / 0.025), transparent)" }} />
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <motion.div {...fade()} className="text-center mb-16">
+            <div className="section-tag mx-auto mb-5">
+              <BadgeCheck className="w-3 h-3" /> Pourquoi nous choisir
+            </div>
+            <h2 className="font-heading text-4xl md:text-5xl font-black text-foreground mb-5 tracking-tight">
+              L'expertise <span className="text-gradient">qui fait la différence</span>
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+              Pas un généraliste de la cybersécurité — un spécialiste du secteur public qui connaît vos enjeux, vos contraintes et vos interlocuteurs.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {whyUs.map((item, i) => (
+              <motion.div key={item.title} {...fade(i * 0.1)}>
+                <div className="glass glass-hover rounded-2xl p-8 h-full flex gap-6">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 mt-0.5"
+                    style={{
+                      background: "linear-gradient(135deg, hsl(213 94% 58% / 0.15), hsl(213 94% 58% / 0.08))",
+                      border: "1px solid hsl(213 94% 58% / 0.25)"
+                    }}>
+                    <item.icon className="w-6 h-6" style={{ color: "hsl(213 94% 68%)" }} />
+                  </div>
+                  <div>
+                    <h3 className="font-heading font-bold text-foreground text-lg mb-3">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── SERVICES ── */}
-      <section className="py-28 px-6">
+      <section className="py-24 px-6">
+        <div className="divider-glow mb-24" />
         <div className="container mx-auto max-w-7xl">
           <motion.div {...fade()} className="text-center mb-16">
             <div className="section-tag mx-auto mb-5">Nos prestations</div>
@@ -398,24 +583,19 @@ export default function Index() {
             {services.map((s, i) => (
               <motion.div key={s.title} {...fade(i * 0.08)}>
                 <Link to={s.href} className="group block h-full">
-                  <div className="relative rounded-2xl p-6 h-full overflow-hidden transition-all duration-300 group-hover:-translate-y-1.5"
-                    style={{
-                      background: "linear-gradient(135deg, hsl(222 40% 9% / 0.9), hsl(222 40% 7% / 0.9))",
-                      border: "1px solid rgba(255,255,255,0.05)",
-                      backdropFilter: "blur(12px)"
-                    }}>
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ boxShadow: "inset 0 0 0 1px hsl(214 100% 60% / 0.15)" }} />
-
+                  <div className="card-premium h-full p-6">
                     <div className="relative z-10">
                       <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110"
-                        style={{ background: "linear-gradient(135deg, hsl(214 100% 60% / 0.15), hsl(214 100% 60% / 0.08))", border: "1px solid hsl(214 100% 60% / 0.2)" }}>
-                        <s.icon className="w-5 h-5 text-primary" />
+                        style={{
+                          background: "linear-gradient(135deg, hsl(213 94% 58% / 0.14), hsl(213 94% 58% / 0.07))",
+                          border: "1px solid hsl(213 94% 58% / 0.22)"
+                        }}>
+                        <s.icon className="w-5 h-5" style={{ color: "hsl(213 94% 68%)" }} />
                       </div>
                       <h3 className="font-heading font-bold text-foreground mb-2.5 group-hover:text-primary transition-colors duration-200">{s.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
-                      <div className="flex items-center gap-1.5 text-xs font-medium text-primary/70 mt-4 group-hover:text-primary transition-colors">
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-4">{s.desc}</p>
+                      <div className="flex items-center gap-1.5 text-xs font-medium mt-auto"
+                        style={{ color: "hsl(213 94% 65%)" }}>
                         En savoir plus <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
                       </div>
                     </div>
@@ -425,7 +605,7 @@ export default function Index() {
             ))}
           </div>
 
-          <motion.div {...fade(0.3)} className="text-center mt-10">
+          <motion.div {...fade(0.3)} className="text-center mt-12">
             <Link to="/contact" className="btn-primary text-base px-8 py-4">
               Demander un devis gratuit <ArrowRight className="w-4 h-4" />
             </Link>
@@ -434,8 +614,8 @@ export default function Index() {
       </section>
 
       {/* ── TÉMOIGNAGES ── */}
-      <section className="py-28 px-6 relative overflow-hidden">
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent, hsl(214 100% 60% / 0.03), transparent)" }} />
+      <section className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 50% at 50% 50%, hsl(213 94% 58% / 0.04) 0%, transparent 70%)" }} />
         <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div {...fade()} className="text-center mb-16">
             <div className="section-tag mx-auto mb-5"><Award className="w-3 h-3" /> Références clients</div>
@@ -449,25 +629,25 @@ export default function Index() {
               <motion.div key={i} {...fade(i * 0.12)}>
                 <div className="relative rounded-2xl p-8 h-full flex flex-col"
                   style={{
-                    background: "linear-gradient(135deg, hsl(222 40% 9% / 0.95), hsl(222 40% 8% / 0.95))",
+                    background: "linear-gradient(145deg, hsl(224 42% 8% / 0.9), hsl(224 42% 6% / 0.95))",
                     border: "1px solid rgba(255,255,255,0.06)",
-                    backdropFilter: "blur(16px)",
-                    boxShadow: "0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)"
+                    backdropFilter: "blur(20px)",
+                    boxShadow: "0 4px 28px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06)"
                   }}>
-                  {/* Top gradient line */}
-                  <div className="absolute top-0 left-8 right-8 h-px" style={{ background: "linear-gradient(90deg, transparent, hsl(214 100% 60% / 0.4), transparent)" }} />
+                  <div className="absolute top-0 left-8 right-8 h-px"
+                    style={{ background: "linear-gradient(90deg, transparent, hsl(213 94% 60% / 0.45), transparent)" }} />
 
                   <div className="flex gap-1 mb-5">
                     {[...Array(t.stars)].map((_, j) => (
-                      <Star key={j} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                      <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                     ))}
                   </div>
                   <blockquote className="text-sm text-muted-foreground leading-relaxed mb-7 flex-1 italic">
                     &ldquo;{t.quote}&rdquo;
                   </blockquote>
-                  <div className="pt-5 border-t border-white/5">
+                  <div className="pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
                     <div className="font-heading font-bold text-foreground text-sm">{t.author}</div>
-                    <div className="text-xs text-primary/70 mt-1 font-mono">{t.role}</div>
+                    <div className="text-xs mt-1 font-mono" style={{ color: "hsl(213 94% 60%)" }}>{t.role}</div>
                   </div>
                 </div>
               </motion.div>
@@ -477,7 +657,7 @@ export default function Index() {
       </section>
 
       {/* ── ARTICLES ── */}
-      <section className="py-28 px-6">
+      <section className="py-24 px-6">
         <div className="container mx-auto max-w-7xl">
           <motion.div {...fade()} className="flex items-end justify-between mb-14">
             <div>
@@ -487,7 +667,7 @@ export default function Index() {
               </h2>
             </div>
             <Link to="/actualites"
-              className="hidden md:flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors group">
+              className="hidden md:flex items-center gap-2 text-sm font-medium transition-colors group btn-ghost">
               Tous les articles
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
@@ -497,30 +677,19 @@ export default function Index() {
             {articles.map((a, i) => (
               <motion.div key={i} {...fade(i * 0.1)}>
                 <Link to={a.slug} className="group block h-full">
-                  <div className="relative rounded-2xl p-7 h-full overflow-hidden transition-all duration-300 group-hover:-translate-y-2"
-                    style={{
-                      background: "linear-gradient(135deg, hsl(222 40% 9% / 0.9), hsl(222 40% 7% / 0.9))",
-                      border: "1px solid rgba(255,255,255,0.05)",
-                      backdropFilter: "blur(12px)"
-                    }}>
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/4 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ boxShadow: "inset 0 0 0 1px hsl(214 100% 60% / 0.12)" }} />
-
+                  <div className="card-premium h-full p-7">
                     <div className="relative z-10">
                       <div className="flex items-center justify-between mb-4">
-                        <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-full"
-                          style={{ background: "hsl(160 70% 45% / 0.12)", border: "1px solid hsl(160 70% 45% / 0.2)", color: "hsl(160 70% 62%)" }}>
-                          {a.category}
-                        </span>
-                        <span className="text-xs text-muted-foreground">{a.readTime}</span>
+                        <span className="badge-green">{a.category}</span>
+                        <span className="text-xs text-muted-foreground font-mono">{a.readTime}</span>
                       </div>
                       <h3 className="font-heading font-bold text-foreground group-hover:text-primary transition-colors duration-200 mb-4 leading-snug text-base">
                         {a.title}
                       </h3>
                       <div className="flex items-center justify-between">
                         <span className="text-xs text-muted-foreground">{a.date}</span>
-                        <div className="flex items-center gap-1 text-xs text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex items-center gap-1 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ color: "hsl(213 94% 65%)" }}>
                           Lire <ArrowRight className="w-3 h-3" />
                         </div>
                       </div>
@@ -534,41 +703,65 @@ export default function Index() {
       </section>
 
       {/* ── CTA FINAL ── */}
-      <section className="py-28 px-6">
+      <section className="py-24 px-6 pb-32">
+        <div className="divider-glow mb-24" />
         <div className="container mx-auto max-w-5xl">
           <motion.div {...fade()}>
             <div className="relative rounded-3xl p-12 md:p-16 text-center overflow-hidden"
               style={{
-                background: "linear-gradient(135deg, hsl(214 100% 14%), hsl(222 47% 8%), hsl(214 80% 12%))",
-                border: "1px solid hsl(214 100% 60% / 0.2)",
-                boxShadow: "0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px hsl(214 100% 60% / 0.08), inset 0 1px 0 rgba(255,255,255,0.08)"
+                background: "linear-gradient(135deg, hsl(214 100% 10%), hsl(224 50% 7%), hsl(213 80% 10%))",
+                border: "1px solid hsl(213 94% 58% / 0.22)",
+                boxShadow: "0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px hsl(213 94% 58% / 0.06), inset 0 1px 0 rgba(255,255,255,0.07)",
               }}>
 
-              {/* Background effects */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
-              <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-secondary/8 rounded-full blur-[60px] pointer-events-none" />
-              <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, hsl(214 100% 60% / 0.5), transparent)" }} />
+              {/* Orbs */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] rounded-full blur-[90px] pointer-events-none"
+                style={{ background: "hsl(213 94% 58% / 0.1)" }} />
+              <div className="absolute bottom-0 right-0 w-[300px] h-[300px] rounded-full blur-[70px] pointer-events-none"
+                style={{ background: "hsl(158 64% 44% / 0.06)" }} />
+
+              {/* Top glow line */}
+              <div className="absolute top-0 left-0 right-0 h-px"
+                style={{ background: "linear-gradient(90deg, transparent, hsl(213 94% 65% / 0.55), transparent)" }} />
 
               <div className="relative z-10">
-                <div className="section-tag mx-auto mb-6" style={{ borderColor: "hsl(214 100% 60% / 0.3)", background: "hsl(214 100% 60% / 0.1)", color: "hsl(214 100% 78%)" }}>
-                  <Phone className="w-3 h-3" /> Contact
+                <div className="flex items-center justify-center gap-3 mb-6">
+                  <div className="dot-live" />
+                  <div className="section-tag"
+                    style={{ borderColor: "hsl(213 94% 58% / 0.3)", background: "hsl(213 94% 58% / 0.1)", color: "hsl(213 94% 78%)" }}>
+                    <Phone className="w-3 h-3" /> Contact
+                  </div>
                 </div>
+
                 <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight">
                   Parlons de votre <span className="text-gradient">sécurité</span>
                 </h2>
-                <p className="text-lg text-blue-200/70 mb-10 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
+                  style={{ color: "hsl(213 50% 72%)" }}>
                   Audit gratuit sous 48h. Nos experts connaissent les contraintes du secteur public : budget, marchés publics, ANSSI, NIS2. Premier échange sans engagement.
                 </p>
+
+                {/* Checklist */}
+                <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-10">
+                  {["Réponse sous 24h", "Devis gratuit", "Sans engagement", "Disponible 24/7"].map(item => (
+                    <div key={item} className="check-item" style={{ color: "hsl(213 30% 70%)" }}>
+                      <div className="check-icon">
+                        <CheckCircle2 className="w-3 h-3" style={{ color: "hsl(158 64% 55%)" }} />
+                      </div>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+
                 <div className="flex flex-wrap gap-4 justify-center">
-                  <Link to="/contact" className="btn-primary text-base px-9 py-4" style={{ fontSize: "1rem" }}>
+                  <Link to="/contact" className="btn-primary text-base px-9 py-4">
                     Audit gratuit <ArrowRight className="w-5 h-5" />
                   </Link>
                   <a href="tel:+33100000000" className="btn-secondary text-base px-9 py-4"
-                    style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.12)" }}>
+                    style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.1)" }}>
                     <Phone className="w-5 h-5" /> 01 00 00 00 00
                   </a>
                 </div>
-                <p className="text-xs text-blue-300/40 mt-8">Réponse garantie sous 24h · Devis gratuit · Sans engagement</p>
               </div>
             </div>
           </motion.div>
