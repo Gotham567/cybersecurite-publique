@@ -1,7 +1,14 @@
 import { motion } from "framer-motion";
-import { Shield, ArrowRight, Clock, Tag } from "lucide-react";
+import { Shield, ArrowRight, Clock, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEOHead from "../components/SEOHead";
+
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5, delay, ease: [0.25, 0.1, 0.25, 1] },
+});
 
 const articles = [
   {
@@ -11,7 +18,7 @@ const articles = [
     date: "15 juin 2026",
     readTime: "12 min",
     category: "NIS2",
-    tag: "Collectivités",
+    featured: true,
   },
   {
     slug: "/actualites/cyberattaques-hopitaux-france-bilan",
@@ -20,7 +27,7 @@ const articles = [
     date: "8 juin 2026",
     readTime: "10 min",
     category: "Santé",
-    tag: "Hôpitaux",
+    featured: false,
   },
   {
     slug: "/actualites/audit-ssi-collectivite-territoriale",
@@ -29,7 +36,7 @@ const articles = [
     date: "1 juin 2026",
     readTime: "15 min",
     category: "Audit",
-    tag: "Collectivités",
+    featured: false,
   },
   {
     slug: "/actualites/certification-hds-hopital-guide",
@@ -38,7 +45,7 @@ const articles = [
     date: "25 mai 2026",
     readTime: "11 min",
     category: "Santé",
-    tag: "HDS",
+    featured: false,
   },
   {
     slug: "/actualites/plan-continuite-activite-sante",
@@ -47,7 +54,7 @@ const articles = [
     date: "18 mai 2026",
     readTime: "13 min",
     category: "Santé",
-    tag: "PCA/PRA",
+    featured: false,
   },
   {
     slug: "/actualites/sensibilisation-agents-publics-cybersecurite",
@@ -56,7 +63,7 @@ const articles = [
     date: "10 mai 2026",
     readTime: "9 min",
     category: "Formation",
-    tag: "Formation",
+    featured: false,
   },
   {
     slug: "/actualites/ransomware-collectivites-comment-se-proteger",
@@ -65,7 +72,7 @@ const articles = [
     date: "2 mai 2026",
     readTime: "14 min",
     category: "Menaces",
-    tag: "Ransomware",
+    featured: false,
   },
   {
     slug: "/actualites/securite-reseaux-industriels-scada-ot",
@@ -74,7 +81,7 @@ const articles = [
     date: "22 avril 2026",
     readTime: "16 min",
     category: "OT/SCADA",
-    tag: "Industrie",
+    featured: false,
   },
   {
     slug: "/actualites/gouvernance-cyber-secteur-public-guide",
@@ -83,7 +90,7 @@ const articles = [
     date: "14 avril 2026",
     readTime: "12 min",
     category: "Gouvernance",
-    tag: "DSI",
+    featured: false,
   },
   {
     slug: "/actualites/passi-qualification-anssi-prestataires",
@@ -92,11 +99,22 @@ const articles = [
     date: "5 avril 2026",
     readTime: "8 min",
     category: "Réglementation",
-    tag: "ANSSI",
+    featured: false,
   },
 ];
 
-const categories = ["Tous", "NIS2", "Santé", "Collectivités", "Audit", "Menaces", "Formation", "OT/SCADA"];
+const categoryColors: Record<string, { bg: string; border: string; text: string }> = {
+  NIS2: { bg: "hsl(213 94% 58% / 0.1)", border: "hsl(213 94% 58% / 0.22)", text: "hsl(213 94% 70%)" },
+  Santé: { bg: "hsl(158 64% 44% / 0.1)", border: "hsl(158 64% 44% / 0.22)", text: "hsl(158 64% 62%)" },
+  Audit: { bg: "hsl(270 70% 60% / 0.1)", border: "hsl(270 70% 60% / 0.22)", text: "hsl(270 70% 72%)" },
+  Formation: { bg: "hsl(213 94% 58% / 0.08)", border: "hsl(213 94% 58% / 0.2)", text: "hsl(213 94% 70%)" },
+  Menaces: { bg: "rgba(239,68,68,0.1)", border: "rgba(239,68,68,0.22)", text: "#fca5a5" },
+  "OT/SCADA": { bg: "hsl(270 70% 60% / 0.1)", border: "hsl(270 70% 60% / 0.22)", text: "hsl(270 70% 72%)" },
+  Gouvernance: { bg: "hsl(158 64% 44% / 0.08)", border: "hsl(158 64% 44% / 0.2)", text: "hsl(158 64% 62%)" },
+  Réglementation: { bg: "rgba(249,115,22,0.09)", border: "rgba(249,115,22,0.2)", text: "#fb923c" },
+};
+
+const getCatStyle = (cat: string) => categoryColors[cat] || categoryColors.NIS2;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -107,6 +125,9 @@ const jsonLd = {
 };
 
 export default function Actualites() {
+  const featured = articles.find(a => a.featured)!;
+  const rest = articles.filter(a => !a.featured);
+
   return (
     <>
       <SEOHead
@@ -116,59 +137,118 @@ export default function Actualites() {
         jsonLd={jsonLd}
       />
 
-      <section className="pt-32 pb-12 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-secondary/5" />
-        <div className="container mx-auto px-6 relative text-center">
+      {/* Hero */}
+      <section className="pt-36 pb-16 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse 70% 50% at 50% -5%, hsl(213 94% 58% / 0.1) 0%, transparent 65%)" }} />
+        <div className="container mx-auto px-6 relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="section-tag mx-auto mb-6"><Shield className="w-3.5 h-3.5" /> Blog expert</div>
-            <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Actualités cybersécurité <span className="text-gradient">secteur public</span>
+            <div className="section-tag mx-auto mb-6"><BookOpen className="w-3 h-3" /> Blog expert</div>
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-5 tracking-tight">
+              Actualités cybersécurité{" "}
+              <span className="text-gradient">secteur public</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Décryptages, guides pratiques et analyses de nos experts sur la cybersécurité des collectivités et des établissements de santé.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-6">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-wrap gap-2">
-            {categories.map((c) => (
-              <button key={c} className="px-4 py-1.5 rounded-full text-xs font-mono border border-border/60 text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors">
-                {c}
-              </button>
-            ))}
-          </div>
+      {/* Featured article */}
+      <section className="px-6 pb-6">
+        <div className="container mx-auto max-w-6xl">
+          <motion.div {...fade()}>
+            <Link to={featured.slug} className="group block">
+              <div className="relative rounded-3xl p-8 md:p-12 overflow-hidden"
+                style={{
+                  background: "linear-gradient(135deg, hsl(213 94% 9% / 0.95), hsl(224 42% 7% / 0.98))",
+                  border: "1px solid hsl(213 94% 58% / 0.2)",
+                  backdropFilter: "blur(20px)",
+                  boxShadow: "0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)"
+                }}>
+                <div className="absolute top-0 left-0 right-0 h-px"
+                  style={{ background: "linear-gradient(90deg, transparent, hsl(213 94% 65% / 0.5), transparent)" }} />
+                <div className="absolute top-0 right-0 w-[400px] h-[300px] rounded-full blur-[80px] pointer-events-none"
+                  style={{ background: "hsl(213 94% 58% / 0.06)" }} />
+
+                <div className="relative z-10 md:max-w-2xl">
+                  <div className="flex items-center gap-3 mb-5">
+                    {(() => { const c = getCatStyle(featured.category); return (
+                      <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-full"
+                        style={{ background: c.bg, border: `1px solid ${c.border}`, color: c.text }}>
+                        {featured.category}
+                      </span>
+                    ); })()}
+                    <span className="text-xs font-mono text-muted-foreground flex items-center gap-1">
+                      <Clock className="w-3 h-3" /> {featured.readTime}
+                    </span>
+                    <span className="text-xs text-muted-foreground">{featured.date}</span>
+                    <span className="text-xs font-mono px-2 py-0.5 rounded-full"
+                      style={{ background: "hsl(213 94% 58% / 0.08)", border: "1px solid hsl(213 94% 58% / 0.18)", color: "hsl(213 94% 65%)" }}>
+                      À la une
+                    </span>
+                  </div>
+                  <h2 className="font-heading text-2xl md:text-3xl font-black text-foreground mb-4 leading-snug group-hover:text-primary transition-colors duration-200">
+                    {featured.title}
+                  </h2>
+                  <p className="text-muted-foreground leading-relaxed mb-6">{featured.desc}</p>
+                  <div className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                    Lire l'article <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
-      <section className="py-10 pb-20">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articles.map((a, i) => (
-              <motion.article key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
-                <Link to={a.slug} className="glass rounded-xl p-6 h-full flex flex-col group hover:border-primary/40 transition-all block">
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded">{a.category}</span>
-                    <span className="text-xs text-muted-foreground bg-muted/30 px-2 py-1 rounded flex items-center gap-1">
-                      <Tag className="w-3 h-3" /> {a.tag}
-                    </span>
-                  </div>
-                  <h2 className="font-heading font-bold text-foreground mb-3 group-hover:text-primary transition-colors leading-snug">
-                    {a.title}
-                  </h2>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4">{a.desc}</p>
-                  <div className="flex items-center justify-between border-t border-border/20 pt-4">
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                      <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {a.readTime}</span>
-                      <span>{a.date}</span>
+      {/* Grid */}
+      <section className="py-10 pb-28 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <div className="divider-glow mb-12" />
+          <div className="flex items-center justify-between mb-10">
+            <h2 className="font-heading text-2xl font-black text-foreground tracking-tight">Tous les articles</h2>
+            <div className="flex items-center gap-1">
+              <Shield className="w-3.5 h-3.5 text-primary/50" />
+              <span className="text-xs text-muted-foreground font-mono">{rest.length} articles</span>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {rest.map((a, i) => {
+              const catStyle = getCatStyle(a.category);
+              return (
+                <motion.article key={i} {...fade(i * 0.05)}>
+                  <Link to={a.slug} className="group block h-full">
+                    <div className="card-premium h-full p-6">
+                      <div className="relative z-10 flex flex-col h-full">
+                        <div className="flex items-center justify-between mb-4">
+                          <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-full"
+                            style={{ background: catStyle.bg, border: `1px solid ${catStyle.border}`, color: catStyle.text }}>
+                            {a.category}
+                          </span>
+                          <span className="text-xs text-muted-foreground font-mono flex items-center gap-1">
+                            <Clock className="w-3 h-3" /> {a.readTime}
+                          </span>
+                        </div>
+                        <h2 className="font-heading font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-200 leading-snug flex-1">
+                          {a.title}
+                        </h2>
+                        <p className="text-xs text-muted-foreground leading-relaxed mb-4 line-clamp-2">{a.desc}</p>
+                        <div className="flex items-center justify-between mt-auto pt-4"
+                          style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+                          <span className="text-xs text-muted-foreground">{a.date}</span>
+                          <div className="flex items-center gap-1 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity"
+                            style={{ color: "hsl(213 94% 65%)" }}>
+                            Lire <ArrowRight className="w-3 h-3" />
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-primary" />
-                  </div>
-                </Link>
-              </motion.article>
-            ))}
+                  </Link>
+                </motion.article>
+              );
+            })}
           </div>
         </div>
       </section>
